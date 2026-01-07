@@ -1,189 +1,201 @@
+"use client"
+
+import { useState } from 'react'
 import { personalInfo } from '@/data/personal-info'
-import { FaEnvelope, FaPhone, FaWhatsapp, FaMapMarkerAlt, FaLinkedin, FaGithub, FaTwitter, FaFacebook, FaPaperPlane, FaClock } from 'react-icons/fa'
+import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaGithub, FaLinkedin, FaFacebook, FaPaperPlane } from 'react-icons/fa'
 
 const Contact = () => {
   const { contact, social } = personalInfo
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    type: 'Full-stack Development',
+    message: ''
+  })
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const subject = `Project Inquiry: ${formData.type} from ${formData.name}`
+    const body = `Name: ${formData.name}%0D%0AEmail: ${formData.email}%0D%0AType: ${formData.type}%0D%0A%0D%0AMessage:%0D%0A${formData.message}`
+    window.location.href = `mailto:${contact.email}?subject=${subject}&body=${body}`
+  }
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
 
   return (
-    <section id="contact" className="py-20 relative">
-      <div className="container mx-auto px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4">
-            Get In Touch
-          </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto mb-6"></div>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Ready to bring your ideas to life? Let's discuss your next project and create something amazing together.
-          </p>
-        </div>
+    <section id="contact" className="py-20 relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0 bg-[#020617]">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-10"></div>
+      </div>
 
-        <div className="max-w-6xl mx-auto">
-          {/* Contact Methods */}
-          <div className="grid md:grid-cols-3 gap-6 mb-16">
-            {/* Email */}
-            <a
-              href={`mailto:${contact.email}`}
-              className="group bg-slate-800/50 backdrop-blur-lg border border-slate-700/50 rounded-2xl p-8 text-center hover:border-cyan-500/50 transition-all duration-300 hover:scale-105"
-            >
-              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-cyan-500/10 flex items-center justify-center text-cyan-400 text-2xl group-hover:scale-110 transition-transform">
-                <FaEnvelope />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2">Email Address</h3>
-              <p className="text-gray-300 mb-4">{contact.email}</p>
-              <span className="text-cyan-400 font-semibold">Send Email →</span>
-            </a>
+      <div className="container mx-auto px-6 lg:px-8 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+          
+          {/* Left Column - Contact Info */}
+          <div className="bg-[#0b1120] rounded-[2rem] p-8 lg:p-12 relative overflow-hidden border border-slate-800/50">
+            {/* Background Decoration */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-slate-800/10 rounded-bl-full -mr-16 -mt-16 pointer-events-none"></div>
+            
+            <h2 className="text-4xl lg:text-5xl font-serif italic font-bold text-white mb-12 tracking-wider">
+              CONTACT INFO
+            </h2>
 
-            {/* Phone */}
-            <a
-              href={`tel:${contact.phone}`}
-              className="group bg-slate-800/50 backdrop-blur-lg border border-slate-700/50 rounded-2xl p-8 text-center hover:border-green-500/50 transition-all duration-300 hover:scale-105"
-            >
-              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-green-500/10 flex items-center justify-center text-green-400 text-2xl group-hover:scale-110 transition-transform">
-                <FaPhone />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2">Phone Number</h3>
-              <p className="text-gray-300 mb-4">{contact.phone}</p>
-              <span className="text-green-400 font-semibold">Call Now →</span>
-            </a>
-
-            {/* WhatsApp */}
-            <a
-              href={`https://wa.me/${contact.whatsapp.replace(/[^0-9]/g, '')}?text=Hi%20Nayem,%20I'd%20like%20to%20discuss%20a%20project%20with%20you.`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group bg-slate-800/50 backdrop-blur-lg border border-slate-700/50 rounded-2xl p-8 text-center hover:border-green-400/50 transition-all duration-300 hover:scale-105"
-            >
-              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-green-400/10 flex items-center justify-center text-green-400 text-2xl group-hover:scale-110 transition-transform">
-                <FaWhatsapp />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2">WhatsApp</h3>
-              <p className="text-gray-300 mb-4">{contact.whatsapp}</p>
-              <span className="text-green-400 font-semibold">Chat Now →</span>
-            </a>
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* Contact Form Alternative */}
-            <div className="bg-slate-800/50 backdrop-blur-lg border border-slate-700/50 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                <FaPaperPlane className="text-cyan-400" />
-                Quick Message
-              </h3>
-              <p className="text-gray-300 mb-6">
-                Prefer to send a detailed message? Click the button below to compose an email with your project details.
-              </p>
-              
-              <div className="space-y-4 mb-6">
-                <div className="flex items-center gap-3 text-gray-300">
-                  <FaClock className="text-cyan-400" />
-                  <span>Response time: Within 24 hours</span>
+            <div className="space-y-10 relative z-10">
+              {/* Email */}
+              <div className="flex items-start gap-6 group">
+                <div className="w-14 h-14 rounded-2xl bg-[#111827] flex items-center justify-center text-blue-500 text-2xl group-hover:bg-blue-500 group-hover:text-white transition-all duration-300 shadow-lg shadow-blue-500/5 border border-slate-800">
+                  <FaEnvelope />
                 </div>
-                <div className="flex items-center gap-3 text-gray-300">
-                  <FaMapMarkerAlt className="text-cyan-400" />
-                  <span>Location: {contact.location}</span>
+                <div>
+                  <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">DIGITAL MAIL</p>
+                  <a href={`mailto:${contact.email}`} className="text-lg lg:text-xl font-bold text-white hover:text-blue-400 transition-colors">
+                    {contact.email}
+                  </a>
                 </div>
               </div>
 
-              <a
-                href={`mailto:${contact.email}?subject=Project Inquiry - Let's Work Together&body=Hi Nayem,%0D%0A%0D%0AI'm interested in working with you on a project.%0D%0A%0D%0AProject Details:%0D%0A- Project Type: %0D%0A- Timeline: %0D%0A- Budget Range: %0D%0A- Additional Requirements: %0D%0A%0D%0APlease let me know your availability for a discussion.%0D%0A%0D%0ABest regards`}
-                className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2"
-              >
-                <FaEnvelope />
-                Compose Detailed Email
+              {/* Phone */}
+              <div className="flex items-start gap-6 group">
+                <div className="w-14 h-14 rounded-2xl bg-[#111827] flex items-center justify-center text-green-500 text-2xl group-hover:bg-green-500 group-hover:text-white transition-all duration-300 shadow-lg shadow-green-500/5 border border-slate-800">
+                  <FaPhone />
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">DIRECT LINE</p>
+                  <a href={`tel:${contact.phone}`} className="text-lg lg:text-xl font-bold text-white hover:text-green-400 transition-colors">
+                    {contact.phone}
+                  </a>
+                </div>
+              </div>
+
+              {/* Location */}
+              <div className="flex items-start gap-6 group">
+                <div className="w-14 h-14 rounded-2xl bg-[#111827] flex items-center justify-center text-purple-500 text-2xl group-hover:bg-purple-500 group-hover:text-white transition-all duration-300 shadow-lg shadow-purple-500/5 border border-slate-800">
+                  <FaMapMarkerAlt />
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">BASE LOCATION</p>
+                  <p className="text-lg lg:text-xl font-bold text-white">
+                    {contact.location}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Social Links */}
+            <div className="mt-16 flex gap-4">
+              <a href={social.github} target="_blank" rel="noopener noreferrer" 
+                 className="w-12 h-12 rounded-xl bg-[#111827] flex items-center justify-center text-slate-400 hover:bg-slate-700 hover:text-white transition-all duration-300 border border-slate-800">
+                <FaGithub className="text-xl" />
+              </a>
+              <a href={social.linkedin} target="_blank" rel="noopener noreferrer"
+                 className="w-12 h-12 rounded-xl bg-[#111827] flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white transition-all duration-300 border border-slate-800">
+                <FaLinkedin className="text-xl" />
+              </a>
+              <a href={social.facebook} target="_blank" rel="noopener noreferrer"
+                 className="w-12 h-12 rounded-xl bg-[#111827] flex items-center justify-center text-slate-400 hover:bg-blue-500 hover:text-white transition-all duration-300 border border-slate-800">
+                <FaFacebook className="text-xl" />
               </a>
             </div>
 
-            {/* Social Media */}
-            <div className="bg-slate-800/50 backdrop-blur-lg border border-slate-700/50 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold text-white mb-6">Connect on Social Media</h3>
-              <p className="text-gray-300 mb-6">
-                Follow me on social platforms for updates on my latest projects and tech insights.
+            {/* Status Indicator */}
+            <div className="mt-12 pt-8 border-t border-slate-800/50 flex items-center gap-3">
+              <span className="relative flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+              </span>
+              <p className="text-sm font-bold text-slate-300 italic tracking-wider">
+                CURRENT STATUS: ACCEPTING PROJECTS
               </p>
-              
-              <div className="grid grid-cols-2 gap-4">
-                {/* LinkedIn */}
-                <a
-                  href={social.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-4 bg-slate-700/50 rounded-xl hover:bg-blue-500/10 hover:border-blue-500/30 border border-transparent transition-all duration-300 group"
-                >
-                  <FaLinkedin className="text-2xl text-blue-400 group-hover:scale-110 transition-transform" />
-                  <div>
-                    <div className="text-white font-medium">LinkedIn</div>
-                    <div className="text-gray-400 text-sm">Professional</div>
-                  </div>
-                </a>
-
-                {/* GitHub */}
-                <a
-                  href={social.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-4 bg-slate-700/50 rounded-xl hover:bg-gray-500/10 hover:border-gray-500/30 border border-transparent transition-all duration-300 group"
-                >
-                  <FaGithub className="text-2xl text-gray-400 group-hover:scale-110 transition-transform" />
-                  <div>
-                    <div className="text-white font-medium">GitHub</div>
-                    <div className="text-gray-400 text-sm">Code Repository</div>
-                  </div>
-                </a>
-
-                {/* Twitter */}
-                <a
-                  href={social.twitter}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-4 bg-slate-700/50 rounded-xl hover:bg-cyan-500/10 hover:border-cyan-500/30 border border-transparent transition-all duration-300 group"
-                >
-                  <FaTwitter className="text-2xl text-cyan-400 group-hover:scale-110 transition-transform" />
-                  <div>
-                    <div className="text-white font-medium">Twitter</div>
-                    <div className="text-gray-400 text-sm">Tech Updates</div>
-                  </div>
-                </a>
-
-                {/* Facebook */}
-                <a
-                  href={social.facebook}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-4 bg-slate-700/50 rounded-xl hover:bg-blue-600/10 hover:border-blue-600/30 border border-transparent transition-all duration-300 group"
-                >
-                  <FaFacebook className="text-2xl text-blue-600 group-hover:scale-110 transition-transform" />
-                  <div>
-                    <div className="text-white font-medium">Facebook</div>
-                    <div className="text-gray-400 text-sm">Personal</div>
-                  </div>
-                </a>
-              </div>
             </div>
           </div>
 
-          {/* Call to Action */}
-          <div className="mt-16 text-center bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 rounded-2xl p-8">
-            <h3 className="text-2xl font-bold text-white mb-4">Ready to Start Your Project?</h3>
-            <p className="text-gray-300 text-lg mb-6 max-w-2xl mx-auto">
-              Whether you need a complete web application, want to improve an existing project, or just have questions about development, I'm here to help bring your vision to life.
-            </p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <a
-                href={`mailto:${contact.email}`}
-                className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-semibold px-8 py-4 rounded-lg transition-all duration-300 hover:scale-105 flex items-center gap-2"
+          {/* Right Column - Form */}
+          <div className="bg-[#0b1120] rounded-[2rem] p-8 lg:p-12 border border-slate-800/50">
+            <form onSubmit={handleSubmit} className="space-y-8">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <label htmlFor="name" className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">
+                    COMMANDER NAME
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Your Full Name"
+                    className="w-full bg-[#111827] border border-slate-800 rounded-xl px-5 py-4 text-slate-300 placeholder-slate-600 focus:outline-none focus:border-cyan-500 transition-colors"
+                    required
+                  />
+                </div>
+                <div className="space-y-3">
+                  <label htmlFor="email" className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">
+                    RETURN ADDRESS
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="email@example.com"
+                    className="w-full bg-[#111827] border border-slate-800 rounded-xl px-5 py-4 text-slate-300 placeholder-slate-600 focus:outline-none focus:border-cyan-500 transition-colors"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <label htmlFor="type" className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">
+                  OPERATION TYPE
+                </label>
+                <div className="relative">
+                  <select
+                    id="type"
+                    name="type"
+                    value={formData.type}
+                    onChange={handleChange}
+                    className="w-full bg-[#111827] border border-slate-800 rounded-xl px-5 py-4 text-slate-300 focus:outline-none focus:border-cyan-500 transition-colors appearance-none cursor-pointer"
+                  >
+                    <option>Full-stack Development</option>
+                    <option>Frontend Development</option>
+                    <option>Backend Development</option>
+                    <option>UI/UX Design</option>
+                    <option>Consultation</option>
+                  </select>
+                  <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-cyan-500 font-bold">
+                    V
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <label htmlFor="message" className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">
+                  INTELLIGENCE BRIEF
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="Describe your vision..."
+                  rows="5"
+                  className="w-full bg-[#111827] border border-slate-800 rounded-xl px-5 py-4 text-slate-300 placeholder-slate-600 focus:outline-none focus:border-cyan-500 transition-colors resize-none"
+                  required
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-cyan-500 hover:bg-cyan-400 text-white font-bold py-5 rounded-full transition-all duration-300 transform hover:scale-[1.02] shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] flex items-center justify-center gap-3 uppercase tracking-widest text-sm"
               >
-                <FaEnvelope />
-                Email Me
-              </a>
-              <a
-                href={`https://wa.me/${contact.whatsapp.replace(/[^0-9]/g, '')}?text=Hi%20Nayem,%20I'd%20like%20to%20discuss%20a%20project%20with%20you.`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-green-500 hover:bg-green-600 text-white font-semibold px-8 py-4 rounded-lg transition-all duration-300 hover:scale-105 flex items-center gap-2"
-              >
-                <FaWhatsapp />
-                WhatsApp
-              </a>
-            </div>
+                SEND MESSAGE
+                <FaPaperPlane className="text-lg" />
+              </button>
+            </form>
           </div>
         </div>
       </div>
@@ -192,3 +204,5 @@ const Contact = () => {
 }
 
 export default Contact
+
+
