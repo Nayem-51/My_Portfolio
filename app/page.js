@@ -8,7 +8,7 @@ import Contact from '@/components/Contact'
 
 export default function Home() {
   return (
-    <>
+    <div className="min-h-screen">
       <Hero />
       <About />
       <Skills />
@@ -16,6 +16,6 @@ export default function Home() {
       <Experience />
       <Projects />
       <Contact />
-    </>
+    </div>
   )
 }

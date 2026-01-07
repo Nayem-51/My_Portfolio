@@ -1,7 +1,7 @@
 export const personalInfo = {
   name: "Nayem Talukdar",
-  designation: "Full Stack Developer",
-  tagline: "Crafting Modern Web Solutions with Passion & Precision",
+  designation: "MERN Stack Developer",
+  tagline: "I build high-performance web applications with a focus on clean code and user experience",
   photo: "/nayem.jpg",
   resume: "/resume.pdf", // Update this when you have your resume
   
